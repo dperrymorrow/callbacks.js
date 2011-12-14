@@ -11,8 +11,13 @@
       console.log( obj );
     }
 
-    window.dpm.Callbacks.get().addCallback('testCallback',this,'callbackListener');
-    window.dpm.Callbacks.get().fireCallback('testCallback',{foo:"bar"});
+    dpm.Callbacks.get().addCallback('testCallback',this,'callbackListener');
+    dpm.Callbacks.get().fireCallback('testCallback',{foo:"bar"});
+
+    // or if you want instance based usage
+    var inst = new dpm.Callbacks();
+    inst.addCallback('testCallback',this,'callbackListener');
+    inst.fireCallback('testCallback',{foo:"bar"});
   </script>
 
 </head>
