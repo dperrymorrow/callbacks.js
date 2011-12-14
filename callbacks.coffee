@@ -1,53 +1,26 @@
-
-  
 window.dpm ?= {}
 
 class window.dpm.Callbacks
-  
-  #singleton
   @get: -> @instance ?= new @
-  
+
   constructor:->
-    @triggers={}
-    @debug=false
-    return
+    @triggers = {}
 
   addCallback:(trigger, instance, method) ->
-    if typeof @triggers[trigger] == "undefined"
-      @triggers[trigger] = []
+    @triggers[trigger] ?= []
+    @triggers[trigger].push
+      name: trigger
+      instance: instance
+      action: method
 
-    @triggers[trigger].push( {obj: instance,action: method} )
-    return
-
-
-  removeCallback:(trigger, instance, method) ->
-    i = 0
-
-    while i < @triggers[trigger].length
-      unless @triggers[trigger][i].action == method
-        @triggers[trigger][i] == null
-        return
-      i++
-    
-    return
+  removeCallback:(trigger, instance) ->
+    @triggers = (listener for listener in @triggers[trigger] when listener.instance != instance)
 
   removeTrigger:(trigger) ->
-    @callbacks.triggers[trigger] = null
-    return
+    @triggers[trigger] = null
 
   fireCallback:(trigger, param) ->
-    if typeof @triggers[trigger] == "undefined"
-      console.log( "no listeners registered for #{trigger}")  if @debug == true
-      return
-    if @debug
-      console.log( trigger)
-      console.log( "#{trigger} fired, #{@triggers[trigger].length} listeners")
-    i = 0
+    return if !@triggers[trigger]
 
-    while i < @triggers[trigger].length
-      listener = @triggers[trigger][i]
-      listener.obj[listener.action]( param )  unless typeof listener.action == "undefined"
-      i++
-    
-    return
-
+    for listener in @triggers[trigger]
+      listener.instance[listener.action]( param )

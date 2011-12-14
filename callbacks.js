@@ -1,64 +1,61 @@
 (function() {
   var _ref;
-    if ((_ref = window.dpm) != null) {
-    _ref;
-  } else {
-    window.dpm = {};
-  };
+
+  if ((_ref = window.dpm) == null) window.dpm = {};
+
   window.dpm.Callbacks = (function() {
+
     Callbacks.get = function() {
       var _ref2;
       return (_ref2 = this.instance) != null ? _ref2 : this.instance = new this;
     };
+
     function Callbacks() {
       this.triggers = {};
-      this.debug = false;
-      return;
     }
+
     Callbacks.prototype.addCallback = function(trigger, instance, method) {
-      if (typeof this.triggers[trigger] === "undefined") {
-        this.triggers[trigger] = [];
-      }
-      this.triggers[trigger].push({
-        obj: instance,
+      var _base, _ref2;
+      if ((_ref2 = (_base = this.triggers)[trigger]) == null) _base[trigger] = [];
+      return this.triggers[trigger].push({
+        name: trigger,
+        instance: instance,
         action: method
       });
     };
-    Callbacks.prototype.removeCallback = function(trigger, instance, method) {
-      var i;
-      i = 0;
-      while (i < this.triggers[trigger].length) {
-        if (this.triggers[trigger][i].action !== method) {
-          this.triggers[trigger][i] === null;
-          return;
+
+    Callbacks.prototype.removeCallback = function(trigger, instance) {
+      var listener;
+      return this.triggers = (function() {
+        var _i, _len, _ref2, _results;
+        _ref2 = this.triggers[trigger];
+        _results = [];
+        for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+          listener = _ref2[_i];
+          if (listener.instance !== instance) _results.push(listener);
         }
-        i++;
-      }
+        return _results;
+      }).call(this);
     };
+
     Callbacks.prototype.removeTrigger = function(trigger) {
-      this.callbacks.triggers[trigger] = null;
+      return this.triggers[trigger] = null;
     };
+
     Callbacks.prototype.fireCallback = function(trigger, param) {
-      var i, listener;
-      if (typeof this.triggers[trigger] === "undefined") {
-        if (this.debug === true) {
-          console.log("no listeners registered for " + trigger);
-        }
-        return;
+      var listener, _i, _len, _ref2, _results;
+      if (!this.triggers[trigger]) return;
+      _ref2 = this.triggers[trigger];
+      _results = [];
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        listener = _ref2[_i];
+        _results.push(listener.instance[listener.action](param));
       }
-      if (this.debug) {
-        console.log(trigger);
-        console.log("" + trigger + " fired, " + this.triggers[trigger].length + " listeners");
-      }
-      i = 0;
-      while (i < this.triggers[trigger].length) {
-        listener = this.triggers[trigger][i];
-        if (typeof listener.action !== "undefined") {
-          listener.obj[listener.action](param);
-        }
-        i++;
-      }
+      return _results;
     };
+
     return Callbacks;
+
   })();
+
 }).call(this);
