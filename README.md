@@ -35,7 +35,7 @@ function callbackListener(obj){
 var inst = new dpm.Callbacks();
 inst.addCallback('testCallback',this,'callbackListener');
 inst.fireCallback('testCallback',{foo:"bar"});
-
+````
 
 ## Tests, yes I have tests...
 Please look in the tests directory, not only will this give you a sense of the use cases, but verifies that this class is working as advertised. If you do any pull requests, please add more tests for new features.
