@@ -1,0 +1,36 @@
+{
+  "name": "callbacks.js",
+  "version": "1.0.0",
+  "description": "event dispatcher and manager",
+  "main": "callbacks-min.js",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "dependencies": {
+    "babel": "^5.1.13",
+    "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.8",
+    "karma-coffee-preprocessor": "^0.2.1",
+    "karma-jasmine": "~0.2.0",
+    "karma-phantomjs-launcher": "~0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dperrymorrow/callbacks.js.git"
+  },
+  "keywords": [
+    "callbacks",
+    "events"
+  ],
+  "author": "David Morrow",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dperrymorrow/callbacks.js/issues"
+  },
+  "homepage": "https://github.com/dperrymorrow/callbacks.js"
+}
