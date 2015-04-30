@@ -1,56 +1,55 @@
 
 
 # run through whole test suite with static and instance versions
-describe "Callbacks.js", ->
+describe "Listen.js Events", ->
   class TestListener
     constructor:(@msg) ->
+    callbackFunction2:(@msg) ->
     callbackFunction:(@msg) ->
 
-  staticInst = Callbacks.instance
-  inst = new Callbacks()
+  staticInst = Listen.instance
+  inst = new Listen()
   instance = staticInst
   listener = {}
   
-  for instance in [inst, staticInst] 
-    beforeEach ->
-      listener = new TestListener("before each");
-      instance.addCallback 'testEvent', listener, 'callbackFunction'
+  # for instance in [inst, staticInst] 
+  beforeEach ->
+    listener = new TestListener("before each");
+    instance.register 'testEvent'
+    instance.add 'testEvent', 'callbackFunction', listener
+    
+  afterEach ->
+    instance.unregister 'testEvent'
+    console.log(JSON.stringify(instance.triggers, null, 2))
 
-    it "Callbacks should have stored the callback", ->
-      expect(instance.triggers.testEvent).not.toBeUndefined
-      
-    it "recieves the callback when fired", ->
-      instance.fireCallback 'testEvent'
-      expect(listener.callbackFunction).toHaveBeenCalled
-      
-    it "triggers should be empty when removed", ->
-      instance.removeCallback 'testEvent', listener
-      expect(instance.triggers.testEvent).toBeUndefined
+  it "Callbacks should have stored the callback", ->
+    expect(instance.triggers.testEvent).not.toBeUndefined
+    
+  it "Throws an error if you add the same listener twice", ->
+    expect(-> instance.add('testEvent', 'callbackFunction', listener)).toThrow();
+    
+  it "recieves the callback when fired", ->
+    instance.trigger 'testEvent'
+    expect(listener.callbackFunction).toHaveBeenCalled
+    
+  it "triggers should be empty when removed", ->
+    instance.remove 'testEvent', listener
+    expect(instance.triggers.testEvent).toBeUndefined
 
-    it "does not call the function after the listener is removed", ->
-      instance.removeCallback 'testEvent', listener
-      spyOn(listener, 'callbackFunction').and.callThrough
-      instance.fireCallback 'testEvent'
-      expect(listener.callbackFunction).not.toHaveBeenCalled
-      
-    it "will pass through a param if one is sent", ->
-      msg = "hello I am the message"
-      spyOn(listener, 'callbackFunction').and.callThrough
-      instance.fireCallback 'testEvent', msg
-      expect(listener.callbackFunction).toHaveBeenCalledWith msg
-      
-    it "the correct scope is used when calling the method", ->
-      msg = "hello I am the message"
-      instance.fireCallback 'testEvent', msg
-      expect(listener.msg).toEqual msg
-      
-    # it "does not add the listener more than once", ->
-    #   spyOn listener, 'callbackFunction'
-    #   listener.callbackFunction.reset
-      
-    #   for x in [1...50] by 1
-    #     instance.addCallback "testEvent", listener, 'callbackFunction'
-        
-    #   console.log(instance.triggers)
-    #   instance.fireCallback 'testEvent'
-    #   expect(listener.callbackFunction.calls.count()).toBe 1
+  it "does not call the function after the listener is removed", ->
+    spyOn(listener, 'callbackFunction').and.callThrough
+    instance.remove 'testEvent', 'callbackFunction', listener,
+    instance.trigger 'testEvent'
+    expect(listener.callbackFunction).not.toHaveBeenCalled
+    
+  it "will pass through a param if one is sent", ->
+    msg = "hello I am the message"
+    spyOn(listener, 'callbackFunction').and.callThrough
+    instance.trigger 'testEvent', msg
+    expect(listener.callbackFunction).toHaveBeenCalledWith msg
+    
+  it "the correct scope is used when calling the method", ->
+    msg = "hello I am the message"
+    instance.trigger 'testEvent', msg
+    expect(listener.msg).toEqual msg
+    

@@ -17,6 +17,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'node_modules/babel-core/browser-polyfill.js',
       'dist/listen.compiled.js',
       // tests
       'tests/listen_events_tests.coffee'
