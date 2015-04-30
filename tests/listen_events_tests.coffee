@@ -6,7 +6,7 @@ describe "Callbacks.js", ->
     constructor:(@msg) ->
     callbackFunction:(@msg) ->
 
-  staticInst = Callbacks.getInstance()
+  staticInst = Callbacks.instance
   inst = new Callbacks()
   instance = staticInst
   listener = {}

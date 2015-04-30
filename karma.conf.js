@@ -17,9 +17,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'dist/callbacks.compiled.js',
+      'dist/listen.compiled.js',
       // tests
-      'tests/callbacks_tests.coffee'
+      'tests/listen_events_tests.coffee'
     ],
 
     // test results reporter to use

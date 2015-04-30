@@ -2,23 +2,9 @@
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <title>Callbacks example</title>
-  <script src="../callbacks.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../dist/listen.compiled.js" type="text/javascript" charset="utf-8"></script>
 
-  <script type="text/javascript" charset="utf-8">
-
-    function callbackListener(obj){
-      console.log( "callbacklistener Fired" );
-      console.log( obj );
-    }
-
-    dpm.Callbacks.get().addCallback('testCallback',this,'callbackListener');
-    dpm.Callbacks.get().fireCallback('testCallback',{foo:"bar"});
-
-    // or if you want instance based usage
-    var inst = new dpm.Callbacks();
-    inst.addCallback('testCallback',this,'callbackListener');
-    inst.fireCallback('testCallback',{foo:"bar"});
-  </script>
+ 
 
 </head>
 <body>

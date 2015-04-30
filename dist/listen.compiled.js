@@ -4,29 +4,36 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var Callbacks = (function () {
-  function Callbacks() {
-    _classCallCheck(this, Callbacks);
+var Listen = (function () {
+  function Listen() {
+    _classCallCheck(this, Listen);
 
-    this.triggers = [];
-    Callbacks.instance = this;
+    this.triggers = {};
+    Listen._instance = this;
   }
 
-  _createClass(Callbacks, [{
-    key: "addCallback",
-    value: function addCallback(eventName, instance, functionName) {}
+  _createClass(Listen, [{
+    key: "add",
+    value: function add(eventName, instance, functionName) {
+      this.triggers[eventName];
+    }
   }, {
-    key: "removeCallback",
-    value: function removeCallback(eventName, instance, functionName) {}
+    key: "remove",
+    value: function remove(eventName, instance, functionName) {}
   }, {
-    key: "fireCallback",
-    value: function fireCallback(eventName, params) {}
+    key: "trigger",
+    value: function trigger(eventName) {
+      var params = arguments[1] === undefined ? null : arguments[1];
+    }
+  }, {
+    key: "registerSignal",
+    value: function registerSignal(signalName) {}
   }], [{
-    key: "getInstance",
-    value: function getInstance() {
-      return Callbacks.instance || new Callbacks();
+    key: "instance",
+    get: function () {
+      return Listen._instance || new Listen();
     }
   }]);
 
-  return Callbacks;
+  return Listen;
 })();
