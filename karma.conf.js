@@ -17,7 +17,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'callbacks.js',
+      'dist/callbacks.compiled.js',
       // tests
       'tests/callbacks_tests.coffee'
     ],
@@ -49,7 +49,7 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
       'PhantomJS',
-      'Chrome'
+      // 'Chrome'
     ],
 
 

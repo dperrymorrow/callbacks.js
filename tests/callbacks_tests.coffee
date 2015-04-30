@@ -6,10 +6,11 @@ describe "Callbacks.js", ->
     constructor:(@msg) ->
     callbackFunction:(@msg) ->
 
-  staticInst = dpm.Callbacks.get()
-  inst = new dpm.Callbacks()
+  staticInst = Callbacks.getInstance()
+  inst = new Callbacks()
+  instance = staticInst
   listener = {}
-    
+  
   for instance in [inst, staticInst] 
     beforeEach ->
       listener = new TestListener("before each");
